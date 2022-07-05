@@ -83,6 +83,9 @@ public class LeagueControl {
 		League league = LeagueControl.executeGames();
 		List<Team> teams = league.getTeamsPositions();
 		AtomicInteger count=new AtomicInteger(1);
+		if (teams.isEmpty()) {
+			throw new Exception("No registered games");
+		}
 		teams.forEach(team -> {
 			System.out.println(count.getAndIncrement() + ". " + team.getName() + " - " + team.getPoints());
 		});
