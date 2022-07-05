@@ -6,7 +6,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,47 +41,40 @@ public class LeagueControl {
 	 */
 	public static League executeGames() throws Exception {
 		League league = new League();
-		List<Team> teams = new ArrayList<Team>();
+		Map<String, Team> teams = new HashMap();
 		games.forEach(gs -> {
 			Game game = new Game();
 			Team team = new Team();
 			boolean isLocalTeam = true;
-			boolean isExistingTeam = false;
 			Pattern pattern = Pattern.compile("((?=[a-zA-Z]+ *[a-zA-Z]*\\s[\\d]+\\s[\\d]+)[a-zA-Z]+ *[a-zA-Z]*\\s[\\d]+|[a-zA-Z]+ *[a-zA-Z]*)|[\\d]+");
 			Matcher m = pattern.matcher(gs);
+			String teamName = null;
 			while (m.find()) {
 				String match = m.group(0).trim();
 				if (team.getName() == null) {
 					if (teams.size() > 0) {
-						for (Team t : teams) {
-							if (t.getName().equals(match)) {
-								team = t;
-								isExistingTeam = true;
-							}
+						if (teams.containsKey(match)) {
+							team = teams.get(match);
 						}
-					} 
-					team.setName(match);
+					}
+					teamName = match;
+					team.setName(teamName);
 				} else {
 					team.setScore(Integer.valueOf(match));
 					if (isLocalTeam) {
 						game.setLocal(team);
 						isLocalTeam = false;
-						if (!isExistingTeam) {
-							teams.add(team);
-						}
+						teams.put(teamName, team);
 						team = new Team();
 					} else {
 						game.setVisiting(team);
-						if (!isExistingTeam) {
-							teams.add(team);
-						}
+						teams.put(teamName, team);
 					}
-					isExistingTeam = false;
 				}
 			}
 			game.executeGame();
 		});
-		league.setTeams(teams);
+		league.setTeams(new ArrayList<>(teams.values()));
 		return league;
 	}
 	

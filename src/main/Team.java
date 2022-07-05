@@ -6,6 +6,16 @@ public class Team implements Comparable<Team> {
 	private Integer points = 0;
 	private Integer score;
 	
+	public Team() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Team(String name, Integer points, Integer score) {
+		this.name = name;
+		this.points = points;
+		this.score = score;
+	}
+
 	public String getName() {
 		return name;
 	}
