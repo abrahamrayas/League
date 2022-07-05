@@ -14,6 +14,22 @@ public class Main {
         System.out.print("Choose your option: ");
 	}
 	
+	public static void option1(Scanner in) throws Exception {
+		System.out.println("");
+		System.out.print("Give me the games file name: ");
+		String fileName = in.next();
+		if (fileName != null && !fileName.isEmpty()) {
+			System.out.println("");
+			LeagueControl.executeLeague(fileName);
+			System.out.println("");
+		}
+	}
+	
+	public static void option2(boolean isExit) {
+		isExit = true;
+		System.out.println("Thanks.");
+		exit(0);
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -26,19 +42,10 @@ public class Main {
 					int option = in.nextInt();
 					switch (option) {
 						case 1:
-							System.out.println("");
-							System.out.print("Give me the games file name: ");
-							String fileName = in.next();
-							if (fileName != null && !fileName.isEmpty()) {
-								System.out.println("");
-								LeagueUtils.executeLeague(fileName);
-								System.out.println("");
-							}
+							option1(in);
 							break;
 						case 2:
-							isExit = true;
-							System.out.println("Thanks.");
-							exit(0);
+							option2(isExit);
 							break;
 						default:
 							System.out.println("");

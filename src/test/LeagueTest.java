@@ -7,15 +7,15 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import main.League;
-import main.LeagueUtils;
+import main.LeagueControl;
 import main.Team;
 
 class LeagueTest {
 
 	@Test
     public void positionTeamsTest() throws Exception {
-		LeagueUtils.readFile("games.txt");
-		League league = LeagueUtils.executeGames();
+		LeagueControl.readGames("games.txt");
+		League league = LeagueControl.executeGames();
 		List<Team> teams = league.getTeamsPositions();
 		
 		assertNotNull(teams);
@@ -33,8 +33,8 @@ class LeagueTest {
 	
 	@Test
     public void positionTeams2Test() throws Exception {
-		LeagueUtils.readFile("games2.txt");
-		League league = LeagueUtils.executeGames();
+		LeagueControl.readGames("games2.txt");
+		League league = LeagueControl.executeGames();
 		List<Team> teams = league.getTeamsPositions();
 		
 		assertNotNull(teams);

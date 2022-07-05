@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LeagueUtils {
+public class LeagueControl {
 	
 	private static List<String> games = new ArrayList<String>();
 	
@@ -21,8 +21,8 @@ public class LeagueUtils {
 	 * This method read the file and save each line in a list
 	 * @param fileName
 	 */
-	public static void readFile(String fileName) throws Exception {
-		URL file = LeagueUtils.class.getResource(fileName);
+	public static void readGames(String fileName) throws Exception {
+		URL file = LeagueControl.class.getResource(fileName);
 		if (file == null) {
 			throw new Exception("The file [" + fileName + "] is not exist.");
 		}
@@ -84,8 +84,8 @@ public class LeagueUtils {
 	}
 	
 	public static void executeLeague(String fileName) throws Exception {
-		LeagueUtils.readFile(fileName + ".txt");
-		League league = LeagueUtils.executeGames();
+		LeagueControl.readGames(fileName + ".txt");
+		League league = LeagueControl.executeGames();
 		List<Team> teams = league.getTeamsPositions();
 		AtomicInteger count=new AtomicInteger(1);
 		teams.forEach(team -> {
